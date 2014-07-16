@@ -11,7 +11,7 @@ package { ['openjdk-7-jdk', 'openjdk-7-jre', 'openjdk-7-jre-headless']:
 package { ['curl', 'vim']: ensure => latest }
 
 class { 'elasticsearch':
-  package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.7.deb',
+  package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.2.2.deb',
   config => {
     'node' => {
       'name' => 'es01'
