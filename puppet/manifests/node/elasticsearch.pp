@@ -1,5 +1,14 @@
-import "common"
-import "jdk"
+import "../common"
+
+class { 'common':
+  stage => prepare
+}
+
+package { ['openjdk-7-jdk', 'openjdk-7-jre', 'openjdk-7-jre-headless']:
+  ensure => latest,
+}
+
+package { ['curl', 'vim']: ensure => latest }
 
 class { 'elasticsearch':
   package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.7.deb',

@@ -17,7 +17,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     elasticsearch.vm.network "private_network", ip: "192.168.254.2"
     elasticsearch.vm.provision "puppet" do |puppet|
       puppet.module_path = "puppet/modules"
-      puppet.manifests/node_path = "puppet"
+      puppet.manifests_path = "puppet"
       puppet.manifest_file = "manifests/node/elasticsearch.pp"
     end
   end
@@ -29,7 +29,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     front_end.vm.network "private_network", ip: "192.168.254.3"
     front_end.vm.provision "puppet" do |puppet|
       puppet.module_path = "puppet/modules"
-      puppet.manifests/node_path = "puppet"
+      puppet.manifests_path = "puppet"
       puppet.manifest_file = "manifests/node/front_end.pp"
     end
   end
@@ -41,8 +41,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     back_end.vm.network "private_network", ip: "192.168.254.4"
     back_end.vm.provision "puppet" do |puppet|
       puppet.module_path = "puppet/modules"
-      puppet.manifests/node_path = "puppet"
+      puppet.manifests_path = "puppet"
       puppet.manifest_file = "manifests/node/back_end.pp"
+    end
+  end
+
+  config.vm.define "kibana", primary: true do |kibana|
+    kibana.vm.hostname = "kibana.deploylah.com"
+    kibana.vm.box = "hashicorp/precise64"
+    kibana.vm.network "forwarded_port", guest:80, host:8507 
+    kibana.vm.network "private_network", ip: "192.168.254.5"
+    kibana.vm.provision "puppet" do |puppet|
+      puppet.module_path = "puppet/modules"
+      puppet.manifests_path = "puppet"
+      puppet.manifest_file = "manifests/node/kibana.pp"
     end
   end
 

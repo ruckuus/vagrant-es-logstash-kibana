@@ -1,11 +1,4 @@
-exec { 'apt-get-update':
-  command => "apt-get update",
-  path => ["/usr/bin", "/bin", "/usr/sbin"],
-  creates => "/tmp/updated",
-  stage => preinstall
-
+stage { 'prepare':
+  before => Stage['main'],
 }
 
-package { ['curl', 'vim-tiny']:
-  ensure => present,
-}
